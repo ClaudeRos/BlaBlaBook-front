@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { API_URL } from '$lib/config';
 
 	let currentUser = null;
 	let currentBooks = [];
@@ -82,7 +83,7 @@
 				{#each currentBooks as userbook}
 					<article class="book">
 						<a href="/livre/{userbook.book.id}">
-							<img src={userbook.book.cover} alt={userbook.book.title} />
+							<img src={`${API_URL}${userbook.book.cover}`} alt={userbook.book.title} />
 						</a>
 						<div class="caption">
 							<p class="book_title">{userbook.book.title}</p>

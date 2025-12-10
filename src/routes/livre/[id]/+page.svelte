@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { user } from '$lib/stores/auth.js';
 	import { booklistStatus, updateBookStatus, getBookStatus } from '$lib/stores/booklistStore.js';
+	import { API_URL } from '$lib/config';
 
 	let inBooklist = $state(false);
 	let toRead = $state(true);
@@ -228,7 +229,7 @@
 	</div>
 
 	<div class="container">
-		<img src={data.book.cover} alt={`Couverture ${data.book.title}`} class="cover" />
+		<img src={`${API_URL}${data.book.cover}`} alt={`Couverture ${data.book.title}`} class="cover" />
 	</div>
 </div>
 

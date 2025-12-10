@@ -1,0 +1,1 @@
+<!-- page Formulaire d'édition d'une catégorie -->

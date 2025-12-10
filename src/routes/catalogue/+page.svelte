@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import { user } from '$lib/stores/auth.js';
 	import { booklistStatus, updateBookStatus, getBookStatus } from '$lib/stores/booklistStore.js';
+	import { API_URL } from '$lib/config';
 
 	let loadingBooks = $state(new Set());
 
@@ -155,7 +156,7 @@
 	{#each data.books as book}
 		<div class="book-container">
 			<a href="/livre/{book.id}">
-				<img src={book.cover} alt={book.title} />
+				<img src={`${API_URL}${book.cover}`} alt={book.title} />
 			</a>
 			<div class="book-description">
 				<div class="book">

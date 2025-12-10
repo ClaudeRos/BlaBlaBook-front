@@ -3,6 +3,7 @@
 	import { getSearchSuggestions } from '$lib/remoteFunction.js';
 	import { goto } from '$app/navigation';
 	import { user, logout } from '$lib/stores/auth.js'; 
+	import { API_URL } from '$lib/config';
 
 	let query = $state('');
 	let suggestions = $state([]);
@@ -170,7 +171,7 @@
 							<li>
 								<button onclick={() => openBook(book.id)} class="suggestion-item">
 									{#if book.cover}
-										<img src={book.cover} alt={book.title} class="book-thumb" />
+										<img src={`${API_URL}${book.cover}`} alt={book.title} class="book-thumb" />
 									{/if}
 
 									<div class="book-info">

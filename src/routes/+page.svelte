@@ -1,4 +1,5 @@
 <script>
+	import { API_URL } from '$lib/config';
 	let { data } = $props();
 </script>
 
@@ -9,7 +10,7 @@
 		<div class="carousel-track">
 			{#each data.book.concat(data.book) as book}
 				<a href={`/livre/${book.id}`} class="slide">
-					<img src={book.cover} alt={book.title} />
+					<img src={`${API_URL}${book.cover}`} alt={book.title} />
 				</a>
 			{/each}
 		</div>
