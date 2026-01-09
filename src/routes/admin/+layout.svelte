@@ -7,14 +7,17 @@
 <div>
   <!-- Barre latérale -->
   <aside>
-    <a href="/admin/utilisateurs">
-        Utilisateurs
+    <a href="/admin/auteurs">
+      Auteurs
+    </a>
+    <a href="/admin/categories">
+      Catégories    
     </a>
     <a href="/admin/livres">
       Livres
     </a>
-    <a href="/admin/categories">
-      Catégories    
+    <a href="/admin/utilisateurs">
+      Utilisateurs
     </a>
   </aside>
 

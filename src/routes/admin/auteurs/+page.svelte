@@ -1,11 +1,11 @@
-<!-- page Liste des catégories  -->
+<!-- page Liste des auteurs -->
 
 <script>
 	import { onMount } from 'svelte';
 	import { API_URL } from '$lib/config';
 
-	let genresList = [];    
-    let totalGenres = 0;
+	let authorsList = [];    
+    let totalAuthors = 0;
 	let errorMessage = '';
 
 	// function decodeJWT(token) {
@@ -19,7 +19,7 @@
 	// 	}
 	// }
 
-	async function loadGenres() {
+	async function loadAuthors() {
 		// const token = localStorage.getItem('token');
 		// if (!token) {
 		// 	goto('/authentification/connexion');
@@ -27,16 +27,16 @@
 		// }
 
 		try {
-			const res = await fetch(`${API_URL}/genres`, {
+			const res = await fetch(`${API_URL}/authors`, {
 				// headers: { Authorization: `Bearer ${token}` }
 			});
 
-			if (!res.ok) throw new Error('Erreur lors de la récupération des catégories');
+			if (!res.ok) throw new Error('Erreur lors de la récupération des auteurs');
 
 			const data = await res.json();
 
-			genresList = data.genres || [];
-			totalGenres = data.totalGenres || genresList.length;            
+			authorsList = data.authors || [];
+			totalAuthors = data.totalAuthors || authorsList.length;            
 
 		} catch (err) {
 			console.error(err);
@@ -44,15 +44,15 @@
 		}
 	}
 
-	function addGenre() {
-		goto(`/admin/categories/ajout`);
+	function addAuthor() {
+		goto(`/admin/auteurs/ajout`);
 	}
 
-	function editGenre(genre) {
-		goto(`/admin/categories/${genre.id}/edit`);
+	function editAuthor(author) {
+		goto(`/admin/auteurs/${author.id}/edit`);
 	}
 
-	async function removeGenre(genre) {
+	async function removeAuthor(author) {
 		// const token = localStorage.getItem('token');
 		// if (!token) {
 		// 	goto('/authentification/connexion');
@@ -63,10 +63,10 @@
 	// 	// if (!decodedToken) return;
 
 		try {
-			console.log(`Suppression de la catégorie: ${genre.name}`);
+			console.log(`Suppression de l'auteur : ${author.name}`);
 
 			const response = await fetch(
-				`${API_URL}/genre/${genre.id}`,
+				`${API_URL}/author/${author.id}`,
 				{
 					method: 'DELETE',
 					headers: {
@@ -77,13 +77,13 @@
 			);
 
 			if (response.ok) {
-				// Supprimer la catégorie de la liste locale
-				genresList = genresList.filter((g) => g.id !== genre.id);
-				totalGenres = Math.max(0, totalGenres - 1);
+				// Supprimer l'auteur de la liste locale
+				authorsList = authorsList.filter((a) => a.id !== author.id);
+				totalAuthors = Math.max(0, totalAuthors - 1);
 
-                loadGenres();
+                loadAuthors();
 
-				console.log('Catégorie supprimée');
+				console.log('Auteur supprimé');
 			} else {
 				console.error('Erreur lors de la suppression');
 			}
@@ -93,48 +93,48 @@
 	}
 
 	onMount(() => {
-		loadGenres();
+		loadAuthors();
 	});
 
 </script>
 
-<section class="genrelist">
+<section class="authorlist">
     <header class="page_title">
-        <h1>Liste des catégories</h1>
+        <h1>Liste des auteurs</h1>
 		<button
-			class="add-genre"
-			aria-label="Ajouter une catégorie"
-			onclick={() => addGenre()}
-		>Ajouter une catégorie</button>
+			class="add-author"
+			aria-label="Ajouter un auteur"
+			onclick={() => addAuthor()}
+		>Ajouter un auteur</button>
 	</header>
 
 	{#if errorMessage}
 		<p class="error">{errorMessage}</p>
-	{:else if totalGenres === 0}
-		<p class="no-genre">Aucune catégorie trouvée.</p>
+	{:else if totalAuthors === 0}
+		<p class="no-author">Aucun auteur trouvé.</p>
 	{:else}
-		{#each genresList as genre}
-			<article class="genre">
-				<div class="genre_data">
-					<div class="genre_info">
+		{#each authorsList as author}
+			<article class="author">
+				<div class="author_data">
+					<div class="author_info">
 						<!-- <p class="genre_name"><a href="/livre/{book.id}">{genre.name}</a></p> -->
-                         <p class="genre_name">{genre.name}</p>
+                         <p class="author_name">{author.firstname} {author.name}</p>
 					</div>
 				</div>
 				<div class="buttons">
 					<button
-						class="edit-genre"
-						aria-label="Modifier les informations de la catégorie"
-						onclick={() => editGenre(genre)}
+						class="edit-author"
+						aria-label="Modifier les informations de l'auteur"
+						onclick={() => editAuthor(author)}
 					>
                     	<span class="icon-wrapper">
 							<span class="material-symbols--edit-rounded"></span>
 						</span>
 					</button>
 					<button
-						class="delete-genre"
-						aria-label="Supprimer la catégorie"
-						onclick={() => removeGenre(genre)}
+						class="delete-author"
+						aria-label="Supprimer l'auteur"
+						onclick={() => removeAuthor(author)}
 					>
 						<span class="icon-wrapper">
 							<span class="material-symbols--delete-rounded"></span>
@@ -147,7 +147,7 @@
 </section>
 
 <style>
-	.genrelist {
+	.authorlist {
 		display: flex;
 		flex-direction: column;
 		min-height: 80vh;
@@ -160,7 +160,7 @@
 		padding: 1.8rem 1.8rem 1rem 1.8rem;
 	}
 /* 
-	.genrelist-title {
+	.authorlist-title {
 		display: flex;
 		gap: 0.7rem;
 		align-items: baseline;
@@ -170,11 +170,11 @@
 		font-size: 28px;
 	}
 
-	.no-genre {
+	.no-author {
 		margin-left: 1rem;
 	}
 
-	.genre {
+	.author {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -183,7 +183,7 @@
 		overflow: hidden;
 	}
 
-	.genre_data {
+	.author_data {
 		display: flex;
 		align-items: center;
 		gap: 0.8rem;
@@ -191,11 +191,11 @@
 		flex-shrink: 1;
 	}
 
-	.genre_info {
+	.author_info {
 		min-width: 0;
 	}
 
-	.genre_name {
+	.author_name {
 		font-weight: 700;
 		white-space: nowrap;
 		overflow: hidden;
@@ -246,7 +246,7 @@
 
 	/* MEDIA QUERIES */
 	@media (max-width: 768px) {
-		.genre {
+		.author {
 			flex-direction: row;
 			align-items: center;
 			justify-content: space-between;
@@ -254,7 +254,7 @@
 			overflow: hidden;
 		}
 
-		.genre_data {
+		.author_data {
 			display: flex;
 			align-items: center;
 			gap: 0.5rem;
@@ -262,11 +262,11 @@
 			min-width: 0;
 		}
 
-		.genre_info {
+		.author_info {
 			min-width: 0;
 		}
 
-		.genre_name {
+		.author_name {
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
