@@ -2,6 +2,7 @@
 
 <script>
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	import { API_URL } from '$lib/config';
 
 	let genresList = [];    

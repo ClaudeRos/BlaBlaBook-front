@@ -50,13 +50,15 @@
 
       const authorsData = await authorsResponse.json();
       const genresData = await genresResponse.json();
+      console.log(authorsData);
+      
 
-      auteurs = authorsData.map(author => ({
+      auteurs = authorsData.authors.map(author => ({
         label: `${author.firstname} ${author.name}`,
         value: author.id
       }));
 
-      genres = genresData.map(genre => ({
+      genres = genresData.genres.map(genre => ({
         label: genre.name,
         value: genre.id
       }));
