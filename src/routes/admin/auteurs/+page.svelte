@@ -5,6 +5,12 @@
 	import { goto } from '$app/navigation';
 	import { API_URL } from '$lib/config';
 
+	import { user } from '$lib/stores/auth.js';
+  
+    onMount(() => {
+        console.log($user);
+    })
+
 	let authorsList = [];    
     let totalAuthors = 0;
 	let errorMessage = '';
