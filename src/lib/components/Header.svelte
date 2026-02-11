@@ -11,6 +11,7 @@
 	let error = $state('');
 	let showSuggestions = $state(false);
 	let searchType = $state('');
+	let menuOpen = $state(false);
 
 	let abortController = null;
 	let currentSearchQuery = '';
@@ -107,6 +108,19 @@
 		currentSearchQuery = '';
 		if (abortController) abortController.abort();
 	}
+
+	function toggleMenu() {
+		menuOpen = !menuOpen;
+	}
+
+	function closeMenu() {
+		menuOpen = false;
+	}
+
+	function handleLogout() {
+		logout();
+		closeMenu();
+	}
 </script>
 
 <header class="header">
@@ -116,8 +130,17 @@
 			<p class="title"><a href="/">BlaBlaBook</a></p>
 		</div>
 
+		<!-- Menu burger (visible uniquement sur mobile et tablette) -->
+		{#if $user}
+			<button class="burger-icon" onclick={toggleMenu} class:active={menuOpen} aria-label="Menu">
+				<span>
+					<span class="lucide--menu"></span>
+				</span>
+			</button>
+		{/if}
+
 		<!-- Condition pour afficher les bons boutons selon l'état de connexion -->
-		<div class="auth-buttons">
+		<div class="desktop-only">
 			{#if $user}
 				<div class="btn-container btn-container-end">
 					<a href="/mon-compte">
@@ -137,6 +160,38 @@
 			{/if}
 		</div>
 	</div>
+
+	<!-- Menu burger déroulant (mobile et tablette uniquement) -->
+	{#if $user}
+		<nav class="burger-menu" class:active={menuOpen}>
+			<ul class="burger-menu-list">
+				<li>
+					<a href="/mon-compte" onclick={closeMenu}>
+						<button class="connection-btn account-btn">Mon compte</button>
+					</a>
+				</li>
+				<li>
+					<button class="connection-btn logout-btn" onclick={handleLogout}>Déconnexion</button>
+				</li>
+			</ul>
+		</nav>
+	{/if}
+
+	<!-- Overlay pour fermer le menu en cliquant à l'extérieur -->
+	{#if menuOpen}
+		<div class="menu-overlay" onclick={closeMenu}></div>
+	{/if}
+
+	<!-- Bouton connexion pour les non-connectés sur mobile/tablette -->
+	{#if !$user}
+		<div class="auth-buttons mobile-only">
+			<div class="btn-container">
+				<a href="/connexion">
+					<button class="connection-btn">Connexion</button>
+				</a>
+			</div>
+		</div>
+	{/if}
 
 	<div class="search-container">
 		<div class="search-controls">
@@ -205,6 +260,8 @@
 	header {
 		background-color: var(--couleur-beige-rose);
 		padding: 0.5rem;
+		/* position: relative; */
+		position: relative;
 	}
 
 	.header-top {
@@ -212,6 +269,8 @@
 		flex-direction: column;
 		align-items: center;
 		gap: 0.5rem;
+		/* position: relative; */
+		position: relative;
 	}
 
 	.logo-title {
@@ -233,6 +292,127 @@
 		font-size: 2rem;
 		margin: 0;
 		text-align: center;
+	}
+
+	/* Menu burger icon */
+	.burger-icon {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		width: 30px;
+		height: 25px;
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		padding: 0;
+	}
+
+	.burger-icon span {
+		width: 30px;
+		height: 3px;
+		background-color: var(--couleur-marron);
+		border-radius: 2px;
+		transition: all 0.3s ease;
+		transform-origin: center;
+	}
+
+	.burger-icon.active span:nth-child(1) {
+		transform: rotate(45deg) translateY(10px);
+	}
+
+	.burger-icon.active span:nth-child(2) {
+		opacity: 0;
+	}
+
+	.burger-icon.active span:nth-child(3) {
+		transform: rotate(-45deg) translateY(-10px);
+	}
+
+	.lucide--menu {
+		display: inline-block;
+		width: 24px;
+		height: 24px;
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%234f4f4f' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 5h16M4 12h16M4 19h16'/%3E%3C/svg%3E");
+	}
+
+	/* Menu burger déroulant */
+	.burger-menu {
+		position: fixed;
+		top: 0;
+		right: -100%;
+		width: 70%;
+		max-width: 300px;
+		height: 100vh;
+		background-color: var(--couleur-beige-rose);
+		box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+		transition: right 0.3s ease;
+		z-index: 1000;
+		padding-top: 5rem;
+	}
+
+	.burger-menu.active {
+		right: 0;
+	}
+
+	.burger-menu-list {
+		list-style: none;
+		margin: 0;
+		padding: 2rem 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.burger-menu-list li {
+		width: 100%;
+	}
+
+	.burger-menu-list a {
+		display: block;
+		text-decoration: none;
+		width: 100%;
+	}
+
+	.burger-menu-list .connection-btn {
+		width: 100%;
+		text-align: center;
+	}
+
+	/* Overlay */
+	.menu-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 999;
+		animation: fadeIn 0.3s ease;
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	/* Affichage conditionnel mobile/desktop */
+	.desktop-only {
+		display: none;
+	}
+
+	.mobile-only {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		align-items: center;
+		width: 100%;
+		margin-top: 0.5rem;
 	}
 
 	.auth-buttons {
@@ -396,7 +576,6 @@
 			flex-direction: row;
 			justify-content: space-between;
 			align-items: center;
-			position: relative;
 		}
 
 		.logo-title {
@@ -417,17 +596,24 @@
 			font-size: 2.5rem;
 		}
 
-		.auth-buttons {
+		/* Le menu burger reste visible sur tablette */
+		.burger-icon {
+			position: relative;
+			top: auto;
+			right: auto;
+		}
+
+		/* .auth-buttons {
 			flex-direction: column;
 			gap: 0.3rem;
 			align-items: flex-end;
 			width: auto;
-		}
+		} */
 
-		.connection-btn {
+		/* .connection-btn {
 			padding: 0.3rem 0.7rem;
 			font-size: 0.85rem;
-		}
+		} */
 
 		.search-controls {
 			flex-direction: row;
@@ -459,10 +645,30 @@
 			font-size: 4rem;
 		}
 
+		/* Cacher le menu burger sur desktop */
+		.burger-icon {
+			display: none;
+		}
+
+		.burger-menu {
+			display: none;
+		}
+
+		.mobile-only {
+			display: none;
+		}
+
+		/* Afficher les boutons normalement sur desktop */
+		.desktop-only {
+			display: flex;
+		}
+
 		.auth-buttons {
 			flex-direction: row;
 			gap: 0.4rem;
 			align-items: center;
+			/* width: auto; */
+			width: auto;
 		}
 
 		.connection-btn {
