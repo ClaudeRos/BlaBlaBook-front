@@ -137,12 +137,20 @@
 					<span class="lucide--menu"></span>
 				</span>
 			</button>
+			<button class="burger-button-desktop" onclick={toggleMenu} class:active={menuOpen} aria-label="Menu">Menu</button>
 		{/if}
 
 		<!-- Condition pour afficher les bons boutons selon l'état de connexion -->
 		<div class="desktop-only">
 			{#if $user}
-				<div class="btn-container btn-container-end">
+				{#if $user.role == "admin"}
+					<div class="btn-container  btn-container-end">
+						<a href="/admin" onclick={closeMenu}>
+							<button class="connection-btn">Administration</button>
+						</a>
+					</div>
+				{/if}
+				<div class="btn-container">
 					<a href="/mon-compte">
 						<button class="connection-btn account-btn">Mon compte</button>
 					</a>
@@ -165,6 +173,13 @@
 	{#if $user}
 		<nav class="burger-menu" class:active={menuOpen}>
 			<ul class="burger-menu-list">
+				{#if $user.role == "admin"}
+					<li>
+						<a href="/admin" onclick={closeMenu}>
+							<button class="connection-btn">Administration</button>
+						</a>
+					</li>
+				{/if}
 				<li>
 					<a href="/mon-compte" onclick={closeMenu}>
 						<button class="connection-btn account-btn">Mon compte</button>
@@ -295,6 +310,11 @@
 	}
 
 	/* Menu burger icon */
+
+	.burger-button-desktop {
+		display: none;
+	}
+
 	.burger-icon {
 		display: flex;
 		flex-direction: column;
@@ -595,18 +615,6 @@
 			right: auto;
 		}
 
-		/* .auth-buttons {
-			flex-direction: column;
-			gap: 0.3rem;
-			align-items: flex-end;
-			width: auto;
-		} */
-
-		/* .connection-btn {
-			padding: 0.3rem 0.7rem;
-			font-size: 0.85rem;
-		} */
-
 		.search-controls {
 			flex-direction: row;
 			align-items: center;
@@ -637,30 +645,27 @@
 			font-size: 4rem;
 		}
 
-		/* Cacher le menu burger sur desktop */
 		.burger-icon {
 			display: none;
 		}
 
-		.burger-menu {
-			display: none;
-		}
-
-		.mobile-only {
-			display: none;
-		}
-
-		/* Afficher les boutons normalement sur desktop */
-		.desktop-only {
-			display: flex;
+		.burger-button-desktop {
+			display: inline;
+			background-color: var(--couleur-bleu-vert);
+			color: var(--couleur-beige-clair);
+			border: solid 2px var(--couleur-beige-clair);
+			padding: 0.4rem 1rem;
 		}
 
 		.auth-buttons {
 			flex-direction: row;
 			gap: 0.4rem;
 			align-items: center;
-			/* width: auto; */
 			width: auto;
+		}
+
+		.btn-container button {
+			margin: 1.2rem;
 		}
 
 		.connection-btn {
@@ -678,6 +683,31 @@
 			font-size: 1rem;
 			border-radius: 25px;
 			box-shadow: 1px 3px 10px 1px rgba(80, 79, 79, 0.5);
+		}
+	}
+
+	@media (min-width: 1500px) {
+
+		.burger-button-desktop {
+			display: none;
+		}
+
+		/* Cacher le menu burger sur desktop */
+		.burger-icon {
+			display: none;
+		}
+
+		.burger-menu {
+			display: none;
+		}
+
+		.mobile-only {
+			display: none;
+		}
+
+		/* Afficher les boutons normalement sur desktop */
+		.desktop-only {
+			display: flex;
 		}
 	}
 </style>
