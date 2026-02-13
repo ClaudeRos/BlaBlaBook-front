@@ -299,9 +299,10 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
+		border-radius: 5px;
 		width: 30px;
-		height: 25px;
-		background: transparent;
+		height: 30px;
+		background-color: var(--couleur-beige-rose);
 		border: none;
 		cursor: pointer;
 		padding: 0;
@@ -309,32 +310,19 @@
 
 	.burger-icon span {
 		width: 30px;
-		height: 3px;
-		background-color: var(--couleur-marron);
-		border-radius: 2px;
+		height: 30px;
 		transition: all 0.3s ease;
 		transform-origin: center;
-	}
-
-	.burger-icon.active span:nth-child(1) {
-		transform: rotate(45deg) translateY(10px);
-	}
-
-	.burger-icon.active span:nth-child(2) {
-		opacity: 0;
-	}
-
-	.burger-icon.active span:nth-child(3) {
-		transform: rotate(-45deg) translateY(-10px);
 	}
 
 	.lucide--menu {
 		display: inline-block;
 		width: 24px;
 		height: 24px;
-		background-repeat: no-repeat;
-		background-size: 100% 100%;
-		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%234f4f4f' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 5h16M4 12h16M4 19h16'/%3E%3C/svg%3E");
+		background-color: var(--couleur-marron);
+		mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%234f4f4f' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 5h16M4 12h16M4 19h16'/%3E%3C/svg%3E");
+		mask-repeat: no-repeat;		
+		mask-size: 100% 100%;
 	}
 
 	/* Menu burger déroulant */
@@ -378,6 +366,10 @@
 	.burger-menu-list .connection-btn {
 		width: 100%;
 		text-align: center;
+	}
+
+	.burger-menu-list button {
+		margin: 0;
 	}
 
 	/* Overlay */
