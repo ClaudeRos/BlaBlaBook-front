@@ -60,13 +60,13 @@
 	}
 
 	async function removeAuthor(author) {
-		// const token = localStorage.getItem('token');
+		const token = localStorage.getItem('token');
 		// if (!token) {
 		// 	goto('/authentification/connexion');
 		//     return;
 		// }
 
-	// 	// const decodedToken = decodeJWT(token);
+	 	// const decodedToken = decodeJWT(token);
 	// 	// if (!decodedToken) return;
 
 		try {
@@ -77,7 +77,7 @@
 				{
 					method: 'DELETE',
 					headers: {
-						// Authorization: `Bearer ${token}`,
+						Authorization: `Bearer ${token}`,
 						'Content-Type': 'application/json'
 					}
 				}

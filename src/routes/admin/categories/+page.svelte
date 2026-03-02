@@ -54,7 +54,7 @@
 	}
 
 	async function removeGenre(genre) {
-		// const token = localStorage.getItem('token');
+		const token = localStorage.getItem('token');
 		// if (!token) {
 		// 	goto('/authentification/connexion');
 		//     return;
@@ -71,7 +71,7 @@
 				{
 					method: 'DELETE',
 					headers: {
-						// Authorization: `Bearer ${token}`,
+						Authorization: `Bearer ${token}`,
 						'Content-Type': 'application/json'
 					}
 				}

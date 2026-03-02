@@ -19,6 +19,8 @@
   // Calculer si on est en mode édition
   const isEditMode = $derived(authorId !== null);
 
+  const token = localStorage.getItem('token');
+
   async function handleSubmit(event) {
     event.preventDefault();
     errorMessage = '';
@@ -57,7 +59,8 @@
       const response = await fetch(url, {
         method,
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(author)
       });

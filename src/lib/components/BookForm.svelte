@@ -112,6 +112,8 @@
     event.preventDefault();
     errorMessage = '';
 
+    const token = localStorage.getItem('token');  
+
     // Validation
     if (!title.trim()) {
       errorMessage = 'Le titre est requis.';
@@ -158,6 +160,9 @@
 
       const response = await fetch(url, {
         method,
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
         body: formData
       });
 

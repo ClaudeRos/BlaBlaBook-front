@@ -22,6 +22,8 @@
     event.preventDefault();
     errorMessage = '';
 
+    const token = localStorage.getItem('token'); 
+
     // Validation
     if (!name.trim()) {
       errorMessage = 'Le nom du genre littéraire est requis.';
@@ -44,6 +46,7 @@
       const response = await fetch(url, {
         method,
         headers: {
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(genre)
