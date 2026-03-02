@@ -1,6 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { user } from '$lib/stores/auth.js';
+	import { API_URL } from '$lib/config';
 
 	let isLogin = $state(true);
 	let errorMessage = $state('');
@@ -11,7 +12,7 @@
 
 		const formData = new FormData(event.target);
 
-		const res = await fetch('http://localhost:3000/user/login', {
+		const res = await fetch(`${API_URL}/user/login`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -50,7 +51,7 @@
 		}
 
 		// Envoie le FormData tel quel, sans JSON.stringify
-		const res = await fetch('http://localhost:3000/user/register', {
+		const res = await fetch(`${API_URL}/user/register`, {
 			method: 'POST',
 			body: formData //  multipart/form-data automatiquement géré
 		});

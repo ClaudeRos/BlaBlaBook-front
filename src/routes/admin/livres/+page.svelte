@@ -32,7 +32,7 @@
 		// }
 
 		try {
-			const res = await fetch(`http://localhost:3000/catalog?page=${pageNumber}&limit=${limit}`, {
+			const res = await fetch(`${API_URL}/catalog?page=${pageNumber}&limit=${limit}`, {
 				// headers: { Authorization: `Bearer ${token}` }
 			});
 
@@ -73,7 +73,7 @@
 			console.log(`Suppression du livre: ${book.title}`);
 
 			const response = await fetch(
-				`http://localhost:3000/book/${book.id}`,
+				`${API_URL}/book/${book.id}`,
 				{
 					method: 'DELETE',
 					headers: {

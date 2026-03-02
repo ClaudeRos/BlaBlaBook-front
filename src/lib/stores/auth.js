@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
+import { API_URL } from '$lib/config';
 
 
 export const user = writable(null);
@@ -19,7 +20,7 @@ export async function loadUserFromToken() {
   try {
     console.log('Chargement de l\'utilisateur depuis le token...');
 
-    const res = await fetch('http://localhost:3000/auth/me', {
+    const res = await fetch(`${API_URL}/auth/me`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }

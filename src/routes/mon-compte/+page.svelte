@@ -17,7 +17,7 @@
 
 		try {
 			// Récupération des infos utilisateur
-			const userResponse = await fetch('http://localhost:3000/auth/me', {
+			const userResponse = await fetch(`${API_URL}/auth/me`, {
 				headers: { Authorization: `Bearer ${token}` }
 			});
 
@@ -28,7 +28,7 @@
 			currentUser = await userResponse.json();
 
 			// Récupération des livres favoris
-			const booksResponse = await fetch(`http://localhost:3000/userbooks?limit=4`, {
+			const booksResponse = await fetch(`${API_URL}/userbooks?limit=4`, {
 				headers: { Authorization: `Bearer ${token}` }
 			});
 
@@ -55,7 +55,7 @@
 				<img
 					class="avatar"
 					src={currentUser.avatar
-						? `http://localhost:3000/${currentUser.avatar}`
+						? `${API_URL}/${currentUser.avatar}`
 						: '/images/Avatar_crop.jpg'}
 					alt="avatar"
 				/>

@@ -1,7 +1,9 @@
+import { API_URL } from '$lib/config';
+
 export const getSearchSuggestions = async (q, type, signal) => {
   if (!q) return [];
 
-  const url = new URL('http://localhost:3000/search');
+  const url = new URL(`${API_URL}/search`);
   url.searchParams.set('q', q);
   if (type) url.searchParams.set('type', type);
 

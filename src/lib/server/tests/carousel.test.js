@@ -8,6 +8,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 // Import de la fonction load() de la page d'accueil
 import { load } from '../../../routes/+page';
+import { API_URL } from '$lib/config';
 
 // Définition du bloc de test
 describe('load function page d’accueil', () => {
@@ -33,7 +34,7 @@ describe('load function page d’accueil', () => {
     const result = await load();
 
     // Vérifier que fetch a bien été appelé avec l’URL attendue
-    expect(global.fetch).toHaveBeenCalledWith('http://localhost:3000/');
+    expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/`);
 
     // Vérifier que le résultat contient les livres fake
     expect(result).toEqual({ book: fakeBooks });

@@ -38,7 +38,7 @@
 
 		try {
 			const response = await fetch(
-				`http://localhost:3000/user/${decodedToken.id}/book/${book.book.id}`,
+				`${API_URL}/user/${decodedToken.id}/book/${book.book.id}`,
 				{
 					method: 'PUT',
 					headers: {
@@ -78,7 +78,7 @@
 		}
 
 		try {
-			const res = await fetch(`http://localhost:3000/userbooks?page=${pageNumber}&limit=${limit}`, {
+			const res = await fetch(`${API_URL}/userbooks?page=${pageNumber}&limit=${limit}`, {
 				headers: { Authorization: `Bearer ${token}` }
 			});
 
@@ -115,7 +115,7 @@
 			console.log(`Suppression du livre: ${book.book.title}`);
 
 			const response = await fetch(
-				`http://localhost:3000/user/${decodedToken.id}/book/${book.book.id}`,
+				`${API_URL}/user/${decodedToken.id}/book/${book.book.id}`,
 				{
 					method: 'DELETE',
 					headers: {

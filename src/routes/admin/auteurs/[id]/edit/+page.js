@@ -1,5 +1,7 @@
+import { API_URL } from '$lib/config';
+
 export async function load({ params }) {
-  const res = await fetch(`http://localhost:3000/author/${params.id}`);
+  const res = await fetch(`${API_URL}/author/${params.id}`);
 
   if (!res.ok) {
     throw new Error('Auteur introuvable');
