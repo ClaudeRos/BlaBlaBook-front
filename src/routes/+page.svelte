@@ -8,7 +8,7 @@
 
 	<div class="carousel-container">
 		<div class="carousel-track">
-			{#each data.book.concat(data.book) as book}
+			{#each data.book.concat(data.book) as book (book.id)}
 				<a href={`/livre/${book.id}`} class="slide">
 					<img src={`${API_URL}${book.cover}`} alt={book.title} />
 				</a>
